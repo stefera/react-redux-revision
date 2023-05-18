@@ -4,31 +4,45 @@ import "./index.css";
 import App from "./App";
 import store from "./store";
 import * as actions from "./actions";
+import { Provider } from "react-redux";
 
 console.clear();
 
-///GET STATE
-console.log(store.getState());
+// console.log(store.getState());
 
-///SUBSCRIBE- function that is executed any time any action is dispatched in store
+// store.dispatch(actions.bugAdded("Bug1"));
 
-/// DISPATCH- disaptches an action to the store. In our reducer.js, we have a pure function that runs conditionally on a type "bugAdded"
-/// state = reducer(state,action)
-/// notify the subscribers
+// const unsubscribe = store.subscribe(() => {
+// console.log("Store changed!", store.getState());
+// });
 
-store.dispatch(actions.bugAdded("Bug1"));
+// store.subscribe(() => {
+// console.log("Store changed!", store.getState());
+// });
 
+// unsubscribe();
+
+// store.dispatch(actions.bugRemoved());
+
+//Exercise 1 resolve a bug (mark as resolved= true)
+
+//creating unsubscribe
 const unsubscribe = store.subscribe(() => {
-  console.log("Store changed!", store.getState());
+  console.log("State changed!", store.getState());
 });
 
+store.getState();
 store.subscribe(() => {
-  console.log("Store changed!", store.getState());
+  console.log("State changed!", store.getState());
 });
 
+store.dispatch(actions.bugAdded("Bug 1"));
+store.dispatch(actions.bugResolved(1));
 unsubscribe();
 
-store.dispatch(actions.bugRemoved());
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
