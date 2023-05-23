@@ -1,8 +1,9 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { bugAdded, bugResolved } from "./actions";
+import { bugAdded, bugDesUpdated, bugRemoved, bugResolved } from "./actions";
+import ListItem from "./ListItem";
+import { FaFontAwesome } from "react-icons/fa";
 
 function App() {
   const state = useSelector((state) => state);
@@ -11,33 +12,32 @@ function App() {
   return (
     <div>
       <div>
-        <h1> {state.length}</h1>
-        <button onClick={() => dispatch(bugAdded())}>dispatch</button>
+        <ul style={{ listStyle: "none", rowGap: 10 }}>
+          {state.map((item) => {
+            return (
+              <li key={item.id}>
+                <ListItem item={item} bugDesUpdated={bugDesUpdated} />
+              </li>
+            );
+          })}
+        </ul>
+        <h1>
+          {state.length} tickets,
+          {state.filter((bug) => bug.resolved === true).length} resolved
+        </h1>
+        <button onClick={() => dispatch(bugAdded())}>Add</button>
         <button onClick={() => dispatch(bugResolved(state.length - 1))}>
-          resolve
+          Resolve
+        </button>
+        <button onClick={() => dispatch(bugRemoved(state.length))}>
+          Remove
         </button>
       </div>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <header className="App-header"></header>
       </div>
     </div>
   );
 }
-App.contextTypes = {
-  store: React.propTypes,
-};
 
 export default App;

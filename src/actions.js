@@ -9,13 +9,10 @@ const createAction = (type) => {
   return action;
 };
 
-export function bugRemoved(id) {
-  return {
-    type: actionTypes.BUG_REMOVED,
-    payload: id,
-  };
-}
-
 export const bugAdded = createAction("bugAdded");
 
 export const bugResolved = createAction("bugResolved");
+
+export const bugRemoved = createAction("bugRemoved");
+
+export const bugDesUpdated = createAction("bugDesUpdated");
