@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { bugAdded, bugRemoved, bugResolved, bugDesUpdated } from "./actions";
 import { createReducer } from "@reduxjs/toolkit";
 
-let lastId = 0;
+let lastId = 1;
 
 // createReducer is a function that returns a function (the reducer)
 // "builder" is built in (into createReducer) object with 'addCase, addMatcher, addDefaultCase methods on it'
@@ -13,7 +13,7 @@ const reducer = createReducer([], (builder) => {
   builder
     .addCase(bugAdded, (state, action) => {
       state.push({
-        id: state.length + 1,
+        id: lastId++,
         description: action.payload?.description,
         resolved: false,
         removed: false,
